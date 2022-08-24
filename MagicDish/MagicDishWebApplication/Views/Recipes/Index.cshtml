@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BusinessLogic.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Welcome to your recipes list.</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create"><i class="bi bi-plus-circle"></i> Add new recipe </a>
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="First().Id"></label>
+            </th>
+            <th>
+                <label asp-for="First().Name"></label>
+            </th>
+            <th>
+                <label asp-for="First().CookingTimeInMinutes"></label>
+            </th>
+            <th>
+                <label asp-for="First().IsVegeterian"></label>
+            </th>
+            <th>
+                <label asp-for="First().Description"></label>
+            </th>
+            <th>
+                <label asp-for="First().Ingredients"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var recipe in Model) {
+        <tr>
+            <td>
+                @recipe.Id
+            </td>
+            <td>
+                @recipe.Name
+            </td>
+            <td>
+                @recipe.CookingTimeInMinutes
+            </td>
+            <td>
+                @recipe.IsVegeterian
+            </td>
+            <td>
+                @recipe.Description
+            </td>
+            <td>
+                @*@recipe.Ingredients*@
+                @foreach (var ingredient in recipe.Ingredients)
+                {
+                    
+                        @ingredient.Product.Name @Html.Raw(" ")
+                        @ingredient.Quantity @Html.Raw(" ")
+                        @ingredient.Product.UnitOfMeasure
+                        @Html.Raw("\n")
+                        @Html.Raw(",")
+                    
+                }
+            </td>
+
+            <td>
+                <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id"
+                        class="btn btn-primary mx-1"> <i class="bi bi-pencil-square"></i> Edit</a>
+                        <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id"
+                        class="btn btn-success mx-1"> <i class="bi bi-card-list"></i> Details</a>
+                        <a asp-controller="Recipes" asp-action="Delete" asp-route-id="@recipe.Id"
+                        class="btn btn-danger mx-1"> <i class="bi bi-trash-fill"></i> Delete</a>
+					</div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

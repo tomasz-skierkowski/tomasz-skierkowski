@@ -1,0 +1,17 @@
+﻿@model BusinessLogic.ProductQuantity
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <partial name="Partials/_Details" model="@Model" />
+</div>
+<div>
+    <a class="btn btn-warning" @Html.ActionLink("Edit", "Edit", new { id = Model.Product.Id }) </a>
+    <a class="btn btn-success" asp-action="Index"><i class="bi bi-arrow-left"></i> Back to List </a>
+</div>

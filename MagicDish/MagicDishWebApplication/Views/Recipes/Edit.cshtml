@@ -1,0 +1,118 @@
+﻿@using BusinessLogic
+@model BusinessLogic.Recipe
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Recipe</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control"/>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CookingTimeInMinutes" class="control-label"></label>
+                <input asp-for="CookingTimeInMinutes" class="form-control"/>
+                <span asp-validation-for="CookingTimeInMinutes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsVegeterian"/> <label asp-for="IsVegeterian"></label>
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>*@
+
+            <div>
+            Ingredients
+		    </div>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    @*<th>
+                        id placeholder
+                    </th>  *@                
+                    <th>
+                        <label asp-for="Ingredients[0].Product.Name" class="control-label"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Ingredients[0].Product.ProductCategory" class="control-label"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Ingredients[0].Product.UnitOfMeasure" class="control-label"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Ingredients[0].Quantity" class="control-label"></label>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.Ingredients.Count; i++)
+                {
+                    <tr>
+                        @*<td>
+                            <input type="hidden" asp-for="Ingredients[i].Product.Id" class="form-control"/>
+                        </td>*@
+                        <td>
+                            @Model.Ingredients[i].Product.Name
+                            <input type="hidden" asp-for="Ingredients[i].Product.Name" class="form-control"/>
+                        </td>
+                        <td>
+                            @Model.Ingredients[i].Product.ProductCategory
+                            <input type="hidden" asp-for="Ingredients[i].Product.ProductCategory" class="form-control"/>
+                        </td>
+                        <td>
+                            @Model.Ingredients[i].Product.UnitOfMeasure
+                            <input type="hidden" asp-for="Ingredients[i].Product.UnitOfMeasure" class="form-control"/>
+                        </td>
+                        <td>
+                            @Model.Ingredients[i].Quantity
+                            <input type="hidden" asp-for="Ingredients[i].Quantity" class="form-control"/>
+                        </td>
+                        <td>
+                        <div class="w-75 btn-group" role="group">
+                        <a asp-controller="RecipesTable" asp-action="Edit" asp-route-id="@Model.Id"
+                        class="btn btn-primary mx-1"> <i class="bi bi-pencil-square"></i> Edit</a>
+                        <a asp-controller="RecipesTable" asp-action="Delete" asp-route-id="@Model.Id"
+                        class="btn btn-danger mx-1"> <i class="bi bi-trash-fill"></i> Delete</a>
+					</div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" style="width:150px">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-success" asp-action="Index"><i class="bi bi-arrow-left"></i> Back to List </a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
